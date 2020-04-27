@@ -1,7 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="fb130a0b-c10c-4c3f-be40-8a380b90970f" name="Default Changelist" comment="" />
+    <list default="true" id="fb130a0b-c10c-4c3f-be40-8a380b90970f" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/app/config/db.config.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/controllers/form.controller.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/models/form.model.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/models/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/routes/form.routes.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server.js" beforeDir="false" afterPath="$PROJECT_DIR$/server.js" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -14,6 +23,9 @@
       </list>
     </option>
   </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
   <component name="JsFlowSettings">
     <service-enabled>true</service-enabled>
     <exe-path />
@@ -21,6 +33,9 @@
     <auto-save>true</auto-save>
   </component>
   <component name="ProjectId" id="1b5VEwlJYPuGomTB1OhZ7l3TcPn" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="autoscrollFromSource" value="true" />
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -34,6 +49,7 @@
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="settings.editor.selected.configurable" value="settings.nodejs" />
+    <property name="ts.external.directory.path" value="C:\Program Files\JetBrains\WebStorm 2019.2.4\plugins\JavaScriptLanguage\jsLanguageServicesImpl\external" />
   </component>
   <component name="ServiceViewManager">
     <option name="viewStates">
@@ -59,7 +75,7 @@
       <updated>1587921833272</updated>
       <workItem from="1587921834541" duration="431000" />
       <workItem from="1587922271987" duration="74000" />
-      <workItem from="1587922468993" duration="392000" />
+      <workItem from="1587922468993" duration="12878000" />
     </task>
     <servers />
   </component>
