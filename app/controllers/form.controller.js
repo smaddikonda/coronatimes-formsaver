@@ -1,16 +1,16 @@
 const db = require("../models");
 const Form = db.form;
 
-function mapBody(req) {
+function mapBody(obj) {
     var newForm = new Form({
-        username: req.body.username,
-        firstname: req.body.firstname,
-        lastname: req.body.lastname,
-        email: req.body.email,
-        affects: req.body.affects,
-        precautions: req.body.precautions,
-        wfhProductivity: req.body.wfhProductivity,
-        timeManagement: req.body.timeManagement,
+        username: obj.username,
+        firstname: obj.firstname,
+        lastname: obj.lastname,
+        email: obj.email,
+        affects: obj.affects,
+        precautions: obj.precautions,
+        wfhProductivity: obj.wfhProductivity,
+        timeManagement: obj.timeManagement,
     });
     return newForm;
 }
@@ -18,7 +18,7 @@ function mapBody(req) {
 // Create and Save a new Tutorial
 exports.create = (req, res) => {
     // Create a Tutorial
-    const newForm = mapBody(req);
+    const newForm = mapBody(req.body);
 
     console.log("Attempting to save the document to the DB");
 
@@ -49,7 +49,7 @@ exports.findFormsByExactUsername = (req, res) => {
                 message:
                     err.message || "Some error occurred while retrieving forms with the given username."
             });
-        })
+        });
 };
 
 // Retrieve all Tutorials from the database.
@@ -87,27 +87,54 @@ exports.updateFormForUser = (req, res) => {
         });
     }
 
-    console.dir(req.body);
-
-    const newBody = req.body;
-    const username = req.params.username;
+    let newBody = req.body;
+    const username = req.query.username;
     var condition = {username: username};
+
     Form.findOneAndUpdate(condition, newBody, {new: true})
         .then((updatedDoc) => {
-            res.send(updatedDoc);
-
+            if (updatedDoc != null || (Array.isArray(updatedDoc) && updatedDoc.length != 0)) {
+                res.send(updatedDoc);
+                console.log('Updated the document');
+            } else {
+                newBody = mapBody(req.body);
+                newBody.save(newBody)
+                    .then(data => {
+                        res.send(data);
+                        console.log('Tried to update, doc not found, saving doc instead.');
+                    })
+                    .catch(err => {
+                        res.status(500).send({
+                            message:
+                                err.message || "Some error occurred while saving the Form."
+                        });
+                    });
+            }
         })
         .catch(err => {
-            res.status(400).send({
+            res.status(500).send({
                 message:
-                    err.message || "Some error occurred while updating the doc"
+                    err.message || "Some error occurred while PUTting the form."
             });
-        })
+        });
 };
 
 // Delete a Tutorial with the specified id in the request
 exports.delete = (req, res) => {
-
+    const username = req.query.username;
+    var condition = {username: username};
+    Form.deleteOne(condition, function (err) {
+        if (err) {
+            console.log('deletion is not successful');
+        }
+    }).then(data => {
+        res.send(data);
+    }).catch(error => {
+        res.status(400).send({
+            message:
+                error.message || "Error occurred while deleteing the document"
+        });
+    });
 };
 
 // Delete all Tutorials from the database.
