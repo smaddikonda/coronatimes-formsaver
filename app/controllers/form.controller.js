@@ -1,10 +1,8 @@
 const db = require("../models");
 const Form = db.form;
 
-// Create and Save a new Tutorial
-exports.create = (req, res) => {
-    // Create a Tutorial
-    const newForm = new Form({
+function mapBody(req) {
+    var newForm = new Form({
         username: req.body.username,
         firstname: req.body.firstname,
         lastname: req.body.lastname,
@@ -14,6 +12,13 @@ exports.create = (req, res) => {
         wfhProductivity: req.body.wfhProductivity,
         timeManagement: req.body.timeManagement,
     });
+    return newForm;
+}
+
+// Create and Save a new Tutorial
+exports.create = (req, res) => {
+    // Create a Tutorial
+    const newForm = mapBody(req);
 
     console.log("Attempting to save the document to the DB");
 
@@ -22,7 +27,6 @@ exports.create = (req, res) => {
         .save(newForm)
         .then(data => {
             res.send(data);
-            console.log("Successfully saved the document to the DB");
         })
         .catch(err => {
             res.status(500).send({
@@ -39,7 +43,6 @@ exports.findFormsByExactUsername = (req, res) => {
     Form.find(condition)
         .then(data => {
             res.send(data);
-            console.log("Successfully retrieved the documents with the given username");
         })
         .catch(err => {
             res.status(500).send({
@@ -52,11 +55,10 @@ exports.findFormsByExactUsername = (req, res) => {
 // Retrieve all Tutorials from the database.
 exports.findFormsByUsernameMatch = (req, res) => {
     const username = req.query.username;
-    var condition = username ? { username: { $regex: new RegExp(username), $options: "i" } } : {};
+    var condition = username ? {username: {$regex: new RegExp(username), $options: "i"}} : {};
     Form.find(condition)
         .then(data => {
             res.send(data);
-            console.log("Successfully retrieved the documents with the given username");
         })
         .catch(err => {
             res.status(500).send({
@@ -78,8 +80,29 @@ exports.findOne = (req, res) => {
 };
 
 // Update a Tutorial by the id in the request
-exports.update = (req, res) => {
+exports.updateFormForUser = (req, res) => {
+    if (!req.body) {
+        return res.status(400).send({
+            message: "Data cannot be updated as the body is invalid."
+        });
+    }
 
+    console.dir(req.body);
+
+    const newBody = req.body;
+    const username = req.params.username;
+    var condition = {username: username};
+    Form.findOneAndUpdate(condition, newBody, {new: true})
+        .then((updatedDoc) => {
+            res.send(updatedDoc);
+
+        })
+        .catch(err => {
+            res.status(400).send({
+                message:
+                    err.message || "Some error occurred while updating the doc"
+            });
+        })
 };
 
 // Delete a Tutorial with the specified id in the request
